@@ -6,6 +6,7 @@ const server = express();
 server.use(logger);
 server.use('/users/:id', validateUserId);
 server.use('/users', validateUser);
+server.use('/users/:id/posts', validatePost);
 
 server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`)
@@ -50,6 +51,24 @@ function validateUser(req, res, next) {
     } else if (!body.name || body.name === "") {
       res.status(400).json({
         message: 'missing required name field',
+      });
+    }
+  }
+
+  next();
+}
+
+function validatePost(req, res, next) {
+  const { body } = req;
+
+  if (req.method === 'POST' || req.method === 'PUT') {
+    if (!body) {
+      res.status(400).json({
+        message: 'missing post data',
+      });
+    } else if (!body.text || body.text === "") {
+      res.status(400).json({
+        message: 'missing required text field',
       });
     }
   }
