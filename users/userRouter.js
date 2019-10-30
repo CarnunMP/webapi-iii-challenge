@@ -5,7 +5,18 @@ const router = express.Router();
 router.use('/:id', validateUserId);
 
 router.post('/', validateUser, (req, res) => {
-
+  userDb.insert(req.user)
+    .then(user => {
+      res.status(201).json({
+        message: 'successfully added user',
+        user,
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: err.message,
+      })
+    });
 });
 
 router.post('/:id/posts', validatePost, (req, res) => {
