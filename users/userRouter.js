@@ -23,9 +23,13 @@ router.post('/', validateUser, (req, res) => {
 });
 
 router.post('/:id/posts', validatePost, (req, res) => {
-  const { body } = req;
+  const { text } = req.body;
+  const toPost = {
+    user_id: req.params.id,
+    text,
+  }
 
-  postDb.insert(body)
+  postDb.insert(toPost)
     .then(post => {
       res.status(201).json({
         message: 'successfully added post',
