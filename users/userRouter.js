@@ -1,11 +1,14 @@
 const express = require('express');
 const userDb = require('./users/userDb');
+const postDb = require('../posts/postDb');
 
 const router = express.Router();
 router.use('/:id', validateUserId);
 
 router.post('/', validateUser, (req, res) => {
-  userDb.insert(req.user)
+  const { body } = req;
+
+  userDb.insert(body)
     .then(user => {
       res.status(201).json({
         message: 'successfully added user',
@@ -20,7 +23,20 @@ router.post('/', validateUser, (req, res) => {
 });
 
 router.post('/:id/posts', validatePost, (req, res) => {
+  const { body } = req;
 
+  postDb.insert(body)
+    .then(post => {
+      res.status(201).json({
+        message: 'successfully added post',
+        post,
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: err.message,
+      })
+    });
 });
 
 router.get('/', (req, res) => {
