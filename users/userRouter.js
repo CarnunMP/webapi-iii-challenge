@@ -91,7 +91,7 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateUser, (req, res) => {
   const { id } = req.user;
   const { body } = req;
 
