@@ -5,6 +5,7 @@ const postsDb = require('./posts/postDb');
 const server = express();
 server.use(logger);
 server.use('/users/:id', validateUserId);
+server.use('/users', validateUser);
 
 server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`)
@@ -35,6 +36,25 @@ function validateUserId(req, res, next) {
         message: 'validateUserId failed: ' + err.message,
       });
     });
+}
+
+function validateUser(req, res, next) {
+  const { body } = req;
+  // Not sure if this is working...
+
+  if (req.method === 'POST' || req.method === 'PUT') {
+    if (!body) {
+      res.status(400).json({
+        message: 'missing user data',
+      });
+    } else if (!body.name || body.name === "") {
+      res.status(400).json({
+        message: 'missing required name field',
+      });
+    }
+  }
+
+  next();
 }
 
 module.exports = server;
