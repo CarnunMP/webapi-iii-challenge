@@ -136,7 +136,6 @@ function validateUserId(req, res, next) {
 
 function validateUser(req, res, next) {
   const { body } = req;
-  // Not sure if this is working...
 
   if (req.method === 'POST' || req.method === 'PUT') {
     if (!body) {

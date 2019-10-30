@@ -49,6 +49,8 @@ router.delete('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+  // Hmm... ideally I'd validatePost here. How best to go about it?
+  // Import from userRouter? Put middleware in its own file(s)?
   const { id } = req.post;
   const { body } = req;
 
