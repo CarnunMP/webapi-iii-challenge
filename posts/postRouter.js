@@ -1,6 +1,5 @@
-const express = 'express';
-const userDb = require('../users/userDb');
-const postDb = require('./posts/postDb');
+const express = require('express');
+const postDb = require('./postDb');
 
 const router = express.Router();
 router.use('/:id', validatePostId);
