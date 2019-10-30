@@ -1,16 +1,14 @@
-const express = 'express';
+const express = require('express');
 const userDb = require('./users/userDb');
 
 const router = express.Router();
-router.use('/users/:id', validateUserId);
-router.use('/users', validateUser);
-router.use('/users/:id/posts', validatePost);
+router.use('/:id', validateUserId);
 
-router.post('/', (req, res) => {
+router.post('/', validateUser, (req, res) => {
 
 });
 
-router.post('/:id/posts', (req, res) => {
+router.post('/:id/posts', validatePost, (req, res) => {
 
 });
 
