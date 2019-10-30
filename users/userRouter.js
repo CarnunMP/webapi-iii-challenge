@@ -18,7 +18,7 @@ router.post('/', validateUser, (req, res) => {
     .catch(err => {
       res.status(500).json({
         message: err.message,
-      })
+      });
     });
 });
 
@@ -35,28 +35,76 @@ router.post('/:id/posts', validatePost, (req, res) => {
     .catch(err => {
       res.status(500).json({
         message: err.message,
-      })
+      });
     });
 });
 
 router.get('/', (req, res) => {
-
+  userDb.get()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: err.message,
+      });
+    });
 });
 
 router.get('/:id', (req, res) => {
-
+  res.status(200).json(req.user);
 });
 
 router.get('/:id/posts', (req, res) => {
+  const { id } = req.user;
 
+  userDb.getUserPosts(id)
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: err.message,
+      });
+    });
 });
 
 router.delete('/:id', (req, res) => {
+  const { id } = req.user;
 
+  userDb.remove(id)
+    .then(count => {
+      res.status(200).json({
+        message: 'successfully deleted user',
+        user: req.user,
+        count,
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: err.message,
+      });
+    });
 });
 
 router.put('/:id', (req, res) => {
+  const { id } = req.user;
+  const { body } = req;
 
+  userDb.update(id, body)
+    .then(count => {
+      res.status(200).json({
+        message: 'successfully updated user',
+        user: req.user,
+        changes: body,
+        count,
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: err.message,
+      });
+    });
 });
 
 //custom middleware
