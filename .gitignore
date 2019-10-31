@@ -59,3 +59,7 @@ typings/
 
 # Mac files
 .DS_Store
+
+
+# Day 4 stretch
+/.env

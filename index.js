@@ -1,6 +1,9 @@
 // code away!
-const server = require('./server');
+require('dotenv').config(); // Day 4 stretch
 
-server.listen(4000, () => {
-  console.log('\n* Server running on http://localhost:4000 *\n');
+const server = require('./server');
+const PORT = process.env.PORT; // Day 4 stretch
+
+server.listen(PORT, () => {
+  console.log(`\n* Server running on http://localhost:${PORT} *\n`);
 })
